@@ -12,18 +12,18 @@ using namespace std;
 class GameMechs
 {
     private:
-        char input;
+        char input; //holds most recent input collected via MacULib_getChar()
         bool exitFlag;
-        bool loseFlag;
-        int score;
+        bool loseFlag; //boolean recording whether player has lost or won, is used to determine the display message at end of game
+        int score; //holds current score of player
 
-        int boardSizeX;
-        int boardSizeY;
+        int boardSizeX; //Board size in X
+        int boardSizeY; //Board size in Y
 
-        objPos food;
+        objPos food; 
 
     public:
-        GameMechs();
+        GameMechs(); 
         GameMechs(int boardX, int boardY);
         ~GameMechs(); // is this one needed at all? Why or why not?
         
@@ -32,7 +32,7 @@ class GameMechs
         bool getLoseFlagStatus() const;
         void setLoseFlag();
 
-        char getInput() const;
+        char getInput();
         void setInput(char this_input);
         void clearInput();
 

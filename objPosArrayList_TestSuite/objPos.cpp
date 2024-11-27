@@ -1,6 +1,6 @@
 #include "objPos.h"
 
-objPos::objPos()
+objPos::objPos() //default constructor
 {
     pos = new Pos;
     pos->x = 0;
@@ -8,7 +8,7 @@ objPos::objPos()
     symbol = 0; //NULL
 }
 
-objPos::objPos(int xPos, int yPos, char sym)
+objPos::objPos(int xPos, int yPos, char sym) //custum constructor
 {
     pos = new Pos;
     pos->x = xPos;
@@ -20,9 +20,49 @@ objPos::objPos(int xPos, int yPos, char sym)
 // [TODO] Implement the missing special member functions to meet the minimum four rule
 
 
+//ADDED IN implement copy constructor
+objPos::objPos(const objPos &obj) 
+{
+    //allocates new memory for Pos
+    pos = new Pos;
+    //copies x coordinate from obj object to the x coordinate of the current object
+    pos->x = obj.pos->x;
+    //copies y coordinate from obj object to the y coordinate of the current object
+    pos->y = obj.pos->y;
+    //copiesthe symbol from obj object to the symbol of the current object
+    symbol = obj.symbol;
+}
+
+//ADDED IN destructor
+objPos::~objPos()
+{
+    //frees memory that was dynamically allocated previously
+    delete(pos);
+}
 
 
-void objPos::setObjPos(objPos o)
+//ADDED IN implement copy assignment constructor
+objPos& objPos::operator=(const objPos &obj)
+{
+    //ensures assignment operator does not proceed if they are already equal
+    if(this != &obj)
+    {
+        //allocates new memory for pos 
+        pos = new Pos;
+
+        //creates deep copy of x and y member of struct from source obj
+        pos->x = obj.pos->x;
+        pos->y = obj.pos->y;
+        //creates deep copy of symbol from source obj
+        symbol = obj.symbol;
+    }
+    //returns currnet object by reference
+    return *this;
+}
+
+
+
+void objPos::setObjPos(objPos o) //
 {
     pos->x = o.pos->x;
     pos->y = o.pos->y;
