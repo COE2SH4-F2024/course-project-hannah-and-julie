@@ -32,6 +32,10 @@ class Player
 
         // Need a reference to the Main Game Mechanisms
         GameMechs* mainGameMechsRef;
+        void Player(GameMechs* gmRef);
+        objPos getPlayerPos() const;
+        GameMechs* mainGameMechsRef;
+        objPos Player::getPlayerPos() const
 };
 
 #endif
