@@ -37,6 +37,7 @@ void testConstructor()
 	objPosArrayList thisList;
 	int expectedSize = 0;
 	int actualSize = thisList.getSize();
+	//int actualSize=0;
 	
 	// First check the list size
 	result &= assert_equal(expectedSize, actualSize);
