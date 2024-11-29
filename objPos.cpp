@@ -103,3 +103,38 @@ char objPos::getSymbolIfPosEqual(const objPos* refPos) const
     else
         return 0;
 }
+void objPos:: playerPos() const
+{
+    char thisSymbol= symbol;
+    Pos *thispos= pos; 
+    
+}
+DIR objPos::myDir() const
+{
+    //char input = GameMechs::getInput(); // Get input (e.g., 'a', 'w', 'd', 's')
+    char input='a';
+    if (input == 'a')
+    {
+        return LEFT;
+    }
+    else if (input == 'w')
+    {
+        return UP;
+    }
+    else if (input == 'd')
+    {
+        return RIGHT;
+    }
+    else if (input == 's')
+    {
+        return DOWN;
+    }
+
+    return currentDIR;  // Default to currentDIR if input doesn't match
+}
+
+
+// GameMechs* mainGameMechsRef() const
+// {
+
+// }

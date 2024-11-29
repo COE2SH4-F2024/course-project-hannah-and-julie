@@ -1,11 +1,19 @@
 #include "player.h"
+#include "GameMechs.h"
 Player::Player(GameMechs* thisGMRef)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
-        playerPos=objPos();
-    //mainGameMechsRef=thisGMRef;
-    objPos playerPos(10,5,'*');
+    // playerPos=objPos();
+    // mainGameMechsRef=thisGMRef;
+    // objPos playerPos(10,5,'*');
+    playerPos.pos->x=mainGameMechsRef->getBoardSizeX()/2;
+    playerPos.pos->y=mainGameMechsRef->getBoardSizeY()/2;
+    playerPos.pos->x=5;
+    playerPos.pos->y=5;
+    playerPos.symbol='*';
+
+
 
     // more actions to be included
 }
@@ -66,30 +74,27 @@ void Player::updatePlayerDir() {
 
 
 void Player::movePlayer() {
-    
-
     // Update the position based on the current direction
-    objPos currentPos=getPlayerPos(); 
     switch (myDir) {
         case UP:
-            currentPos.pos->y -= 1;
-            if (currentPos.pos->y < 0) // Wrap around if moving out of bounds
-                currentPos.pos->y = mainGameMechsRef->getBoardSizeY() - 1;
+            playerPos.pos->y -= 1;
+            if (playerPos.pos->y < 1) // Wrap around if moving out of bounds
+                playerPos.pos->y = mainGameMechsRef->getBoardSizeY() - 1;
             break;
         case DOWN:
-            currentPos.pos->y += 1;
-            if (currentPos.pos->y >= mainGameMechsRef->getBoardSizeY()) // Wrap around
-                currentPos.pos->y = 0;
+            playerPos.pos->y += 1;
+            if (playerPos.pos->y >= mainGameMechsRef->getBoardSizeY()-1) // Wrap around
+                playerPos.pos->y = 1;
             break;
         case LEFT:
-            currentPos.pos->x -= 1;
-            if (currentPos.pos->x < 0) // Wrap around
-                currentPos.pos->x = mainGameMechsRef->getBoardSizeX() - 1;
+            playerPos.pos->x -= 1;
+            if (playerPos.pos->x < 1) // Wrap around
+                playerPos.pos->x = mainGameMechsRef->getBoardSizeX() - 1;
             break;
         case RIGHT:
-            currentPos.pos->x += 1;
-            if (currentPos.pos->x >= mainGameMechsRef->getBoardSizeX()) // Wrap around
-                currentPos.pos->x = 0;
+            playerPos.pos->x += 1;
+            if (playerPos.pos->x >= mainGameMechsRef->getBoardSizeX()-1) // Wrap around
+                playerPos.pos->x = 1;
             break;
         case STOP:
         default:

@@ -1,5 +1,8 @@
+
 #ifndef OBJPOS_H
 #define OBJPOS_H
+
+// #include "GameMechs.h"  // Commented
 
 // Not really a C++ thing
 typedef struct 
@@ -7,6 +10,14 @@ typedef struct
     int x;
     int y;
 } Pos;
+
+enum DIR
+{
+    DOWN,
+    UP,
+    LEFT,
+    RIGHT,
+}; 
 
 class objPos
 {
@@ -19,16 +30,9 @@ class objPos
         
         // Respect the rule of six / minimum four
         // [TODO] Implement the missing special member functions to meet the minimum four rule
-
-        //ADDED copy constructor
-        objPos(const objPos &obj);
-
-        //ADDED copy assignment constructor
-        objPos& operator=(const objPos &obj);
-
-
-        //ADDED destructor
         ~objPos();
+        objPos& operator=(const objPos& other);
+        objPos(const objPos& other);
         
         void setObjPos(objPos o);        
         void setObjPos(int xPos, int yPos, char sym);  
@@ -38,6 +42,20 @@ class objPos
         char getSymbolIfPosEqual(const objPos* refPos) const;
         
         bool isPosEqual(const objPos* refPos) const;
-};
+        
+        
+        DIR myDIR=UP;
+        //track players pos
+        DIR currentDIR;
+        
+    private:
+        //iteration 1A
+        void playerPos() const;
+        DIR myDir() const;
+        // GameMechs* mainGameMechsRef;  // Commented
+    
 
+
+
+};
 #endif
