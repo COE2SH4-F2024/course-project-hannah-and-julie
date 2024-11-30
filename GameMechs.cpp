@@ -1,6 +1,8 @@
 #include "GameMechs.h"
 #include "MacUILib.h"
 
+
+
 GameMechs::GameMechs()
 {
     input = 0; //holds most recent input collected via MacULib_getChar()
@@ -8,8 +10,13 @@ GameMechs::GameMechs()
     loseFlag = false; //boolean recording whether player has lost or won, is used to determine the display message at end of game
     score = 0; //holds current score of player
 
-    boardSizeX = 30; //Board size in X
-    boardSizeY = 15; //Board size in Y
+    boardSizeX = 20; //Board size in X
+    boardSizeY = 10; //Board size in Y
+
+    //food.setObjPos(-10,-10,'o');
+    //food.setObjPos(10,10,'o'); 
+    //initializes food obj to be outside of game board
+    //before it is randomly placed on the game board it will not accidently appear at (0,0) 
 
 }
 
@@ -22,12 +29,14 @@ GameMechs::GameMechs(int boardX, int boardY)
 
     boardSizeX = boardX; //Board size in X
     boardSizeY = boardY; //Board size in Y
+
 }
 
 // do you need a destructor?
 GameMechs::~GameMechs()
 {
-    //do not need to free anything CURRENTLY
+    //do not need to free anything CUR
+
 }
 
 bool GameMechs::getExitFlagStatus() const

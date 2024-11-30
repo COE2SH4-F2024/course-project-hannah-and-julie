@@ -4,12 +4,15 @@
 #include "GameMechs.h"
 #include "Player.h"
 #include "objPosArrayList.h"
+#include "Food.h"
 using namespace std;
 
 #define DELAY_CONST 100000
 
 GameMechs *myGM; //Pointer to Game Mechanics Class
-Player *myPlayer;
+Player *myPlayer; //Pointer to Player class
+Food *myFood; //pointer to food class
+
 //objPos playerPos=myPlayer->getPlayerPos();
 void Initialize(void);
 void GetInput(void);
@@ -45,6 +48,10 @@ void Initialize(void)
     myGM = new GameMechs(); //Initialized on the heap, must delete/deallocate .
     // makes it a second instance and makes myplayer and mygm talk
     myPlayer= new Player(myGM);
+    myFood = new Food();
+
+
+   myFood->generateFood(myGM, myPlayer->getPlayerPos()); //initializes instance of food 
 
 }
 
@@ -113,22 +120,29 @@ void DrawScreen(void)
     
     int row, col;
     objPos playerPos=myPlayer->getPlayerPos();
-    //row is board height 
-    for( col = 0; col < myGM->getBoardSizeY(); col++)
+    objPos foodPos = myFood->GetFoodPos();
+
+    int boardX = myGM->getBoardSizeX();
+    int boardY = myGM->getBoardSizeY();
+    //col is board height -----> pos in the y!!!!
+    for( col = 0; col < boardY; col++)
     {
-        //col is board width
-        for( row = 0; row < myGM->getBoardSizeX(); row++)
+        //row is board width -----> pos in the x!!!!
+        for( row = 0; row < boardX; row++) //can change myGM->getBoardSizeX(); to boardY
         {
             
             //This is directly pasted from my PPA, it just needs the correct player object to be implemented
-            
-            if(row == playerPos.pos->x && col == playerPos.pos->y)
+            if(row == 0 || col == 0 || col == boardY - 1 || row == boardX -1)
+            {
+                MacUILib_printf("#");
+            }
+            else if(row == playerPos.pos->x && col == playerPos.pos->y)
             {
                 MacUILib_printf("%c",playerPos.symbol);
             }
-            else if(row == 0 || col == 0 || col == myGM->getBoardSizeY() - 1 || row == myGM->getBoardSizeX() -1)
+            else if(row == foodPos.pos->x && col == foodPos.pos->y) //food doesnt show up when foodPos.pos is not within the range of boardY and boardX
             {
-                MacUILib_printf("#");
+                MacUILib_printf("%c",foodPos.symbol);
             }
             else
             {
@@ -137,11 +151,15 @@ void DrawScreen(void)
     
         }
           MacUILib_printf("\n");
-    }
 
-    //FOR DEBUGGING, CAN DELETE LATER
-    // int score = myGM->getScore();
-    // MacUILib_printf("score = %d", score);
+    }
+    //printing coordinates of food to debug
+    //DELETE LATER!!!
+    MacUILib_printf("foodPos x = %d ", foodPos.getObjPos().pos->x);
+
+    MacUILib_printf("foodPos y = %d", foodPos.getObjPos().pos->y);
+
+
 
     //LOST GAME MESSAGE
     bool loser = myGM->getLoseFlagStatus();
@@ -168,6 +186,8 @@ void CleanUp(void)
 
     //DEALLOCATIONS
     delete(myGM);
+    delete(myPlayer);
+    //delete(myFood);
 }
 
 

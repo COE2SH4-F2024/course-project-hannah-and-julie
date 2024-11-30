@@ -1,4 +1,4 @@
-#include "player.h"
+#include "Player.h"
 #include "GameMechs.h"
 Player::Player(GameMechs* thisGMRef)
 {
@@ -22,7 +22,10 @@ Player::Player(GameMechs* thisGMRef)
 Player::~Player()
 {
     // delete any heap members here
-    free(mainGameMechsRef);
+    //delete(mainGameMechsRef);
+
+    //Only use delete where you use new 
+
 }
 
 objPos Player::getPlayerPos() const
