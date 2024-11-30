@@ -3,18 +3,16 @@
 // Check lecture contents on general purpose array list construction, 
 // and modify it to support objPos array list construction.
 
+//I changed this and initialized the members inside the class body instead of in class definiton cuz its more intuitive to me
 objPosArrayList::objPosArrayList() 
-:  aList(new objPos[ARRAY_MAX_CAP]), sizeList(0), arrayCapacity(ARRAY_MAX_CAP)
 {
     // Initialize the sizeArray and sizeList data members.
     //int arraySize= sizeArray;
-    sizeList=0; 
+    sizeList = 0; 
+    arrayCapacity = ARRAY_MAX_CAP;
     // • Allocate an array on the heap with the size specified by sizeArray.
-    aList= new objPos[sizeList];
+    aList = new objPos[arrayCapacity]; //dont think this line is right, I think it should be objPos[arrayCapacity];
     // • The default sizeArray is 200. You may change it as needed.
-    
-
-    
 }
 
 objPosArrayList::~objPosArrayList()
@@ -40,47 +38,63 @@ void objPosArrayList::insertHead(objPos thisPos)
     
     //sizelist is the current size of the array
     //sizearray is max size it can be 
-    if (sizeList < arrayCapacity) 
+    if (sizeList < arrayCapacity) //Checks if there is space in array i.e checks if the length of memory is > than length of list
     {
-        for (int i = sizeList; i > 0; --i) {
+        
+        //if there is enough memory, add one to list size to increase length by 1
+        sizeList++;
+        for (int i = sizeList; i > 0; --i) //shifts elements to the right to make space for one at the start
+        {
             aList[i] = aList[i - 1];
         }
+
+        //inserts currnet pos thisPos in the first index (i=0)
         aList[0] = thisPos;
-        sizeList++;
     }
     
 }
 
+//UNCOMMENT AFTER JUST DEBUGGING
 void objPosArrayList::insertTail(objPos thisPos)
 {
-    aList[sizeList]=thisPos; 
-
+    if(sizeList < arrayCapacity) //checks if there is enough memory allocated for array list to add one more element to list
+    {
+    aList[sizeList] = thisPos; //adds element at END of list (at tail, or at index of list ize)
+        sizeList++; //adds one unit to sizeList to account for the element we just added
+    }
     
 }
 
 void objPosArrayList::removeHead()
 {
-    for(int i=0; i< sizeList; i++)
+    if(sizeList > 0)
     {
-        aList[i]=aList[i+1];
+        for(int i = 0; i < sizeList; i++) //iterates through list and shifts values to the left, removing a value at the head
+        {
+            aList[i]=aList[i+1];
+        }
+        sizeList--;
     }
     
 }
 
 void objPosArrayList::removeTail()
 {
-    if(sizeList>0)
+    if(sizeList > 0) //checks that list size is greater than 0 to avoid removing element from empty list causing error
     {
-        sizeList--; 
+        sizeList--; //simply decreases list size which automatically removes last element in list
     }
     
 }
 
 objPos objPosArrayList::getHeadElement() const
 {
-    if(sizeList>0)
+    if(sizeList > 0) 
     {
-        return aList[0];
+    return aList[0]; //returns first element
+    }
+    else{
+        return objPos(); //IDK WHY but needs a default return value in case sizeList is less than 0.
     }
     
 }
@@ -89,16 +103,24 @@ objPos objPosArrayList::getTailElement() const
 {
     if(sizeList>0)
     {
-        return aList[sizeList-1];
+    return aList[sizeList-1]; //returns last element
+    }
+    else{
+        return objPos(); //IDK WHY but needs a default return value in case sizeList is less than 0.
     }
     
 }
 
 objPos objPosArrayList::getElement(int index) const
 {
-    if(sizeList>0&& sizeList>index)
+    if(index>=0 && index<sizeList)
     {
-        return aList[index];
+    return aList[index];
     }
+    else{
+        return objPos();
+    }
+    //ensure index does not go out of bounds
+
     
 }
