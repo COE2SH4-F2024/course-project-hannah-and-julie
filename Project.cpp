@@ -57,25 +57,18 @@ void Initialize(void)
 
 void GetInput(void)
 {
-    // char input;
-    // int MacUILib_hasChar(void);
-    // if MacULib_hasChar detects a character typed in keyboard, MacUILib_hasChar will become 1 or any non-zero number
-    // if MacUILib_hasChar does not detect a typed character in keyboard, it remains as 0. we must always check first if a character was detected in keyboard before using MacUILib_getChar to grab said character.
-    // if (MacUILib_hasChar() != 0)
-    // {
-    //     myGM->setInput(MacUILib_getChar());
+    char input;
+    int MacUILib_hasChar(void);
+    //if MacULib_hasChar detects a character typed in keyboard, MacUILib_hasChar will become 1 or any non-zero number
+    //if MacUILib_hasChar does not detect a typed character in keyboard, it remains as 0. we must always check first if a character was detected in keyboard before using MacUILib_getChar to grab said character.
+    if (MacUILib_hasChar() != 0)
+    {
+        myGM->setInput(MacUILib_getChar());
         
-<<<<<<< HEAD
-    //     //NOTE to access input, use myGM->getInput(); 
-    //     //input = myGM->getInput();
-    // }
-    myGM -> collectAsynchInput();
-=======
         //NOTE to access input, use myGM->getInput(); 
-        //input = myGM->getInput();
+        input = myGM->getInput();
     }
-
->>>>>>> 4e2cab87b64c3221b8bdcbfc5d63d62d24d8bb5a
+    myGM -> collectAsynchInput();
     
     
 }
@@ -134,6 +127,7 @@ void DrawScreen(void)
     
     int row, col;
 
+    //objPosArrayList* playerPos = myPlayer->getPlayerPosList();
     objPosArrayList* playerPos = myPlayer->getPlayerPosList();
     int playerSize = playerPos->getSize();
 

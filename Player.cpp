@@ -2,6 +2,7 @@
 #include "GameMechs.h"
 #include "MacUILib.h"
 #include "Food.h"
+#include "objPosArrayList.h"
 
 Player::Player(GameMechs* thisGMRef)
 {
