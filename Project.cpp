@@ -13,7 +13,7 @@ GameMechs *myGM; //Pointer to Game Mechanics Class
 Player *myPlayer; //Pointer to Player class
 Food *myFood; //pointer to food class
 
-objPos playerPos=myPlayer->getPlayerPos();
+
 void Initialize(void);
 void GetInput(void);
 void RunLogic(void);
@@ -48,10 +48,10 @@ void Initialize(void)
     myGM = new GameMechs(); //Initialized on the heap, must delete/deallocate .
     // makes it a second instance and makes myplayer and mygm talk
     myPlayer= new Player(myGM);
-    myFood = new Food();
+    //myFood = new Food();
 
 
-   myFood->generateFood(myGM, myPlayer->getPlayerPosList()); //initializes instance of food 
+   //myFood->generateFood(myGM, myPlayer->getPlayerPosList()); //initializes instance of food 
 
 }
 
@@ -68,7 +68,10 @@ void GetInput(void)
         //NOTE to access input, use myGM->getInput(); 
         input = myGM->getInput();
     }
-    myGM -> collectAsynchInput();
+
+//idk if we need this cuz the function above is doing exactly this part does
+//Maybe uncomment the line below idk yet 
+// myGM -> collectAsynchInput();
     
     
 }
@@ -131,7 +134,7 @@ void DrawScreen(void)
     objPosArrayList* playerPos = myPlayer->getPlayerPosList();
     int playerSize = playerPos->getSize();
 
-    objPos foodPos = myFood->GetFoodPos();
+    //objPos foodPos = myFood->GetFoodPos();
 
     int boardX = myGM->getBoardSizeX();
     int boardY = myGM->getBoardSizeY();
@@ -143,7 +146,7 @@ void DrawScreen(void)
         //row is board width -----> pos in the x!!!!
         for( row = 0; row < boardX; row++) //can change myGM->getBoardSizeX(); to boardY
         {
-                bool isSnake = false;
+            bool isSnake = false;
                 //bool isFood = false;
 
             for(int k = 0; k < playerSize; k++)
@@ -168,11 +171,14 @@ void DrawScreen(void)
 
 
             //FOOD GENERATION
+            //You can uncomment but it will give errors since the current food generation
+            //relies on the old version of player.cpp that does not generate the snake
+            //Food needs to be updated before printing onto board
 
-            if(row == foodPos.pos->x && col == foodPos.pos->y) //food doesnt show up when foodPos.pos is not within the range of boardY and boardX
-            {
-                MacUILib_printf("%c",foodPos.symbol);
-            }
+            // if(row == foodPos.pos->x && col == foodPos.pos->y) //food doesnt show up when foodPos.pos is not within the range of boardY and boardX
+            // {
+            //     MacUILib_printf("%c",foodPos.symbol);
+            // }
             if(!isSnake)
             {
                 //checks if border
@@ -192,12 +198,13 @@ void DrawScreen(void)
           MacUILib_printf("\n");
 
     }
+
     //printing coordinates of food to debug
     //DELETE LATER!!!
 
-    MacUILib_printf("foodPos x = %d ", foodPos.getObjPos().pos->x);
+    // MacUILib_printf("foodPos x = %d ", foodPos.getObjPos().pos->x);
 
-    MacUILib_printf("foodPos y = %d", foodPos.getObjPos().pos->y);
+    // MacUILib_printf("foodPos y = %d", foodPos.getObjPos().pos->y);
 
 
 
@@ -227,5 +234,5 @@ void CleanUp(void)
     //DEALLOCATIONS
     delete(myGM);
     delete(myPlayer);
-    delete(myFood);
+    //delete(myFood);
 }

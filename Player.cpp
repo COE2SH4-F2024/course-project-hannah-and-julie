@@ -107,31 +107,35 @@ void Player::movePlayer() {
 
         case UP:
 
-            playerPos.pos->y -= 1;
-            if (playerPos.pos->y < 1) // Wrap around if moving out of bounds
-                playerPos.pos->y = mainGameMechsRef->getBoardSizeY() - 2;
+            newHead.pos->y = (currentHead.pos->y -1);
+             if (newHead.pos->y == 0 ) //if reaches upper bound
+            {
+                newHead.pos->y = mainGameMechsRef->getBoardSizeY()-2; // Wrap to bottom boundary
+            }
             break;
         case DOWN:
         //sets new head pos to the current head pos +1
         //same as saying newHead.pos->y++
             newHead.pos->y = (currentHead.pos->y + 1);
-            if (newHead.pos->y >= mainGameMechsRef->getBoardSizeY()-1) // Wrap to top boundary
+            if (newHead.pos->y >= mainGameMechsRef->getBoardSizeY()-1) //if reaches upper bound
             {
-                newHead.pos->y = 1;
+                newHead.pos->y = 1; // Wrap to top boundary
             }
             break;
         case LEFT:
-            playerPos.pos->x -= 1;
-            if (playerPos.pos->x < 1) // Wrap around
-                playerPos.pos->x = mainGameMechsRef->getBoardSizeX() - 2;
+            newHead.pos->x = (currentHead.pos->x - 1);
+             if (newHead.pos->x == 0 ) //if reaches left boundary
+            {
+                newHead.pos->x = mainGameMechsRef->getBoardSizeX()-2; // Wrap to right boundary
+            }
             break;
         case RIGHT:
         //sets new head pos to the current head pos +1
         //same as saying newHead.pos->x++
             newHead.pos->x = (currentHead.pos->x + 1);
-            if (newHead.pos->x >= mainGameMechsRef->getBoardSizeX()-1) // Wrap to right boundary
+            if (newHead.pos->x >= mainGameMechsRef->getBoardSizeX()-1) // if reaches right boundary
             {
-                newHead.pos->x = 1;
+                newHead.pos->x = 1; // Wrap to right boundary
             }
             break;
         // case STOP:
