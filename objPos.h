@@ -43,8 +43,11 @@ class objPos
         
         bool isPosEqual(const objPos* refPos) const;
         
-        
-        DIR myDIR=UP;
+        //CHANGED THIS
+        //Instead of initilazing to a value I just initialized the instance here
+        //Then I initialized it to up in both constructors in the cpp file
+        //Gets rid of warning message
+        DIR myDIR;
         //track players pos
         DIR currentDIR;
         

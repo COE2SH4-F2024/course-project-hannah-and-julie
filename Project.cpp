@@ -4,12 +4,15 @@
 #include "GameMechs.h"
 #include "Player.h"
 #include "objPosArrayList.h"
+#include "Food.h"
 using namespace std;
 
 #define DELAY_CONST 100000
 
 GameMechs *myGM; //Pointer to Game Mechanics Class
-Player *myPlayer;
+Player *myPlayer; //Pointer to Player class
+Food *myFood; //pointer to food class
+
 //objPos playerPos=myPlayer->getPlayerPos();
 void Initialize(void);
 void GetInput(void);
@@ -45,6 +48,10 @@ void Initialize(void)
     myGM = new GameMechs(); //Initialized on the heap, must delete/deallocate .
     // makes it a second instance and makes myplayer and mygm talk
     myPlayer= new Player(myGM);
+    //myFood = new Food();
+
+
+   //myFood->generateFood(myGM, myPlayer->getPlayerPosList()); //initializes instance of food 
 
 }
 
@@ -58,10 +65,17 @@ void GetInput(void)
     // {
     //     myGM->setInput(MacUILib_getChar());
         
+<<<<<<< HEAD
     //     //NOTE to access input, use myGM->getInput(); 
     //     //input = myGM->getInput();
     // }
     myGM -> collectAsynchInput();
+=======
+        //NOTE to access input, use myGM->getInput(); 
+        //input = myGM->getInput();
+    }
+
+>>>>>>> 4e2cab87b64c3221b8bdcbfc5d63d62d24d8bb5a
     
     
 }
@@ -69,10 +83,10 @@ void GetInput(void)
 void RunLogic(void)
 {
     char input = myGM->getInput();
-    myPlayer->updatePlayerDir();
+    myPlayer->updatePlayerDir(); 
 
         // Move the player based on updated direction
-        myPlayer->movePlayer();
+    myPlayer->movePlayer();
     if(input != 0)
     {
         
@@ -98,6 +112,12 @@ void RunLogic(void)
                 //myGM->setExitTrue();
                 //not sure if losing is suppose to automatically shut down game or if player must shut down automatically
                 break;
+            //if you press f, food is regenerated at a new position
+            case 'f':
+            case 'F':
+
+                // myFood->generateFood(myGM, myPlayer->getPlayerPos());
+                break;
             
         }
         
@@ -113,36 +133,79 @@ void DrawScreen(void)
     MacUILib_clearScreen();   
     
     int row, col;
-    objPos playerPos=myPlayer->getPlayerPos();
-    //row is board height 
-    for( col = 0; col < myGM->getBoardSizeY(); col++)
+
+    objPosArrayList* playerPos = myPlayer->getPlayerPosList();
+    int playerSize = playerPos->getSize();
+
+    // objPos foodPos = myFood->GetFoodPos();
+
+    int boardX = myGM->getBoardSizeX();
+    int boardY = myGM->getBoardSizeY();
+
+
+    //col is board height -----> pos in the y!!!!
+    for( col = 0; col < boardY; col++)
     {
-        //col is board width
-        for( row = 0; row < myGM->getBoardSizeX(); row++)
+        //row is board width -----> pos in the x!!!!
+        for( row = 0; row < boardX; row++) //can change myGM->getBoardSizeX(); to boardY
         {
-            
-            //This is directly pasted from my PPA, it just needs the correct player object to be implemented
-            
-            if(row == playerPos.pos->x && col == playerPos.pos->y)
+                bool isSnake = false;
+                //bool isFood = false;
+
+            for(int k = 0; k < playerSize; k++)
             {
-                MacUILib_printf("%c",playerPos.symbol);
+                objPos bodyPart = playerPos->getElement(k);
+
+                //iteration3: check if the current segment x,y pos matches the i,j coordinate
+                //if yes, print the element on the screen
+                if (row == bodyPart.pos->x && col == bodyPart.pos->y)
+                {
+                    // MacUILib_printf("%d", bodyPart.pos->x);
+                    // MacUILib_printf("%d", bodyPart.pos->x);
+                    MacUILib_printf("%c", bodyPart.symbol);
+                    isSnake = true;
+                    break;
+                }
+
+                //We need to skip the if-else block below 
+                //maybe use continue or a flag
             }
-            else if(row == 0 || col == 0 || col == myGM->getBoardSizeY() - 1 || row == myGM->getBoardSizeX() -1)
+            //at the end of for loop, do something to determine whether to continue with if-else 
+
+
+            //FOOD GENERATION
+
+            // if(row == foodPos.pos->x && col == foodPos.pos->y) //food doesnt show up when foodPos.pos is not within the range of boardY and boardX
+            // {
+            //     MacUILib_printf("%c",foodPos.symbol);
+            // }
+            if(!isSnake)
             {
-                MacUILib_printf("#");
-            }
-            else
-            {
-                MacUILib_printf(" ");
+                //checks if border
+                if(row == 0 || col == 0 || col == boardY - 1 || row == boardX -1)
+                {
+                    MacUILib_printf("#");
+                }
+                //otherwise print blank space
+                else
+                {
+                    MacUILib_printf(" ");
+                }
+
             }
     
         }
           MacUILib_printf("\n");
-    }
 
-    //FOR DEBUGGING, CAN DELETE LATER
-    // int score = myGM->getScore();
-    // MacUILib_printf("score = %d", score);
+    }
+    //printing coordinates of food to debug
+    //DELETE LATER!!!
+
+    // MacUILib_printf("foodPos x = %d ", foodPos.getObjPos().pos->x);
+
+    // MacUILib_printf("foodPos y = %d", foodPos.getObjPos().pos->y);
+
+
 
     //LOST GAME MESSAGE
     bool loser = myGM->getLoseFlagStatus();
@@ -169,6 +232,8 @@ void CleanUp(void)
 
     //DEALLOCATIONS
     delete(myGM);
+    delete(myPlayer);
+    //delete(myFood);
 }
 
 

@@ -5,6 +5,8 @@
 #include "objPos.h"
 #include "objPosArrayList.h"
 
+class Food;
+
 class Player
 {
     // Construct the remaining declaration from the project manual.
@@ -20,21 +22,27 @@ class Player
         Player(GameMechs* thisGMRef);
         ~Player();
 
-        objPos getPlayerPos() const; // Upgrade this in iteration 3.       
+        //objPos getPlayerPos() const; // Upgrade this in iteration 3.      
+        objPosArrayList* getPlayerPosList() const; 
         void updatePlayerDir();
         void movePlayer();
+        objPos getPlayerPos() const;
         
         // More methods to be added here
 
     private:
-        objPos playerPos; // Upgrade this in iteration 3.  
+        //objPos playerPos; // Upgrade this in iteration 3.  
+
+        objPosArrayList* playerPosList;
+        
+
         //playerPos.pos = new Position;     
         enum DIR myDir;
 
         // Need a reference to the Main Game Mechanisms
         //GameMechs* mainGameMechsRef;
         
-
+        Food* myFood;
         //objPos getPlayerPos() const;
         GameMechs* mainGameMechsRef;
         //objPos getPlayerPos() const;

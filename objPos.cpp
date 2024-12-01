@@ -6,6 +6,7 @@ objPos::objPos()
     pos->x = 0;
     pos->y = 0;
     symbol = 0; //NULL
+    DIR myDIR = UP; //initialzes myDIR to up
 }
 
 objPos::objPos(int xPos, int yPos, char sym)
@@ -14,6 +15,7 @@ objPos::objPos(int xPos, int yPos, char sym)
     pos->x = xPos;
     pos->y = yPos;
     symbol = sym;
+    DIR myDIR = UP; //initialzes myDIR to up
 }
 
 // Respect the rule of six / minimum four
