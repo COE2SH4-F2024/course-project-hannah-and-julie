@@ -106,6 +106,7 @@ void Player::movePlayer() {
     //WRAP AROUND LOGIC
 
         case UP:
+
             playerPos.pos->y -= 1;
             if (playerPos.pos->y < 1) // Wrap around if moving out of bounds
                 playerPos.pos->y = mainGameMechsRef->getBoardSizeY() - 2;

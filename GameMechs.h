@@ -43,12 +43,6 @@ class GameMechs
         void incrementScore();
         
         // More methods should be added here
-<<<<<<< HEAD
         void collectAsynchInput();
-=======
-
-
->>>>>>> 4e2cab87b64c3221b8bdcbfc5d63d62d24d8bb5a
 };
-
 #endif
