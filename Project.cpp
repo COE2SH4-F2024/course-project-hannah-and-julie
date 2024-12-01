@@ -13,7 +13,7 @@ GameMechs *myGM; //Pointer to Game Mechanics Class
 Player *myPlayer; //Pointer to Player class
 Food *myFood; //pointer to food class
 
-//objPos playerPos=myPlayer->getPlayerPos();
+objPos playerPos=myPlayer->getPlayerPos();
 void Initialize(void);
 void GetInput(void);
 void RunLogic(void);
@@ -48,10 +48,10 @@ void Initialize(void)
     myGM = new GameMechs(); //Initialized on the heap, must delete/deallocate .
     // makes it a second instance and makes myplayer and mygm talk
     myPlayer= new Player(myGM);
-    //myFood = new Food();
+    myFood = new Food();
 
 
-   //myFood->generateFood(myGM, myPlayer->getPlayerPosList()); //initializes instance of food 
+   myFood->generateFood(myGM, myPlayer->getPlayerPosList()); //initializes instance of food 
 
 }
 
@@ -59,16 +59,16 @@ void GetInput(void)
 {
     char input;
     int MacUILib_hasChar(void);
-    // if MacULib_hasChar detects a character typed in keyboard, MacUILib_hasChar will become 1 or any non-zero number
-    // if MacUILib_hasChar does not detect a typed character in keyboard, it remains as 0. we must always check first if a character was detected in keyboard before using MacUILib_getChar to grab said character.
+    //if MacULib_hasChar detects a character typed in keyboard, MacUILib_hasChar will become 1 or any non-zero number
+    //if MacUILib_hasChar does not detect a typed character in keyboard, it remains as 0. we must always check first if a character was detected in keyboard before using MacUILib_getChar to grab said character.
     if (MacUILib_hasChar() != 0)
     {
         myGM->setInput(MacUILib_getChar());
         
         //NOTE to access input, use myGM->getInput(); 
-        //input = myGM->getInput();
+        input = myGM->getInput();
     }
-
+    myGM -> collectAsynchInput();
     
     
 }
@@ -109,7 +109,7 @@ void RunLogic(void)
             case 'f':
             case 'F':
 
-                // myFood->generateFood(myGM, myPlayer->getPlayerPos());
+                myFood->generateFood(myGM, myPlayer->getPlayerPosList());
                 break;
             
         }
@@ -127,10 +127,11 @@ void DrawScreen(void)
     
     int row, col;
 
+    //objPosArrayList* playerPos = myPlayer->getPlayerPosList();
     objPosArrayList* playerPos = myPlayer->getPlayerPosList();
     int playerSize = playerPos->getSize();
 
-    // objPos foodPos = myFood->GetFoodPos();
+    objPos foodPos = myFood->GetFoodPos();
 
     int boardX = myGM->getBoardSizeX();
     int boardY = myGM->getBoardSizeY();
@@ -168,10 +169,10 @@ void DrawScreen(void)
 
             //FOOD GENERATION
 
-            // if(row == foodPos.pos->x && col == foodPos.pos->y) //food doesnt show up when foodPos.pos is not within the range of boardY and boardX
-            // {
-            //     MacUILib_printf("%c",foodPos.symbol);
-            // }
+            if(row == foodPos.pos->x && col == foodPos.pos->y) //food doesnt show up when foodPos.pos is not within the range of boardY and boardX
+            {
+                MacUILib_printf("%c",foodPos.symbol);
+            }
             if(!isSnake)
             {
                 //checks if border
@@ -194,9 +195,9 @@ void DrawScreen(void)
     //printing coordinates of food to debug
     //DELETE LATER!!!
 
-    // MacUILib_printf("foodPos x = %d ", foodPos.getObjPos().pos->x);
+    MacUILib_printf("foodPos x = %d ", foodPos.getObjPos().pos->x);
 
-    // MacUILib_printf("foodPos y = %d", foodPos.getObjPos().pos->y);
+    MacUILib_printf("foodPos y = %d", foodPos.getObjPos().pos->y);
 
 
 
@@ -226,12 +227,5 @@ void CleanUp(void)
     //DEALLOCATIONS
     delete(myGM);
     delete(myPlayer);
-    //delete(myFood);
+    delete(myFood);
 }
-
-
-
-
-
-
-

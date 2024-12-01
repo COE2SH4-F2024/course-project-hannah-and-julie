@@ -2,6 +2,7 @@
 #include "GameMechs.h"
 #include "MacUILib.h"
 #include "Food.h"
+#include "objPosArrayList.h"
 
 Player::Player(GameMechs* thisGMRef)
 {
@@ -105,13 +106,10 @@ void Player::movePlayer() {
     //WRAP AROUND LOGIC
 
         case UP:
-        //sets new head pos to the current head pos -1
-        //same as saying newHead.pos->y--
-            newHead.pos->y = (currentHead.pos->y - 1);
-            if (newHead.pos->y == 0)
-            {
-                newHead.pos->y = mainGameMechsRef->getBoardSizeY() - 2; // Wrap to bottom boundary
-            }
+
+            playerPos.pos->y -= 1;
+            if (playerPos.pos->y < 1) // Wrap around if moving out of bounds
+                playerPos.pos->y = mainGameMechsRef->getBoardSizeY() - 2;
             break;
         case DOWN:
         //sets new head pos to the current head pos +1
@@ -123,14 +121,9 @@ void Player::movePlayer() {
             }
             break;
         case LEFT:
-        //sets new head pos to the current head pos -1
-        //same as saying newHead.pos->x--
-            newHead.pos->x = (currentHead.pos->x - 1);
-            if (newHead.pos->x < 1) // Wrap around
-            {
-                newHead.pos->x = mainGameMechsRef->getBoardSizeX() - 2; // Wrap to left boundary
-            }
-
+            playerPos.pos->x -= 1;
+            if (playerPos.pos->x < 1) // Wrap around
+                playerPos.pos->x = mainGameMechsRef->getBoardSizeX() - 2;
             break;
         case RIGHT:
         //sets new head pos to the current head pos +1
