@@ -5,6 +5,8 @@
 #include "objPos.h"
 #include "objPosArrayList.h"
 
+class Food;
+
 class Player
 {
     // Construct the remaining declaration from the project manual.
@@ -40,7 +42,7 @@ class Player
         // Need a reference to the Main Game Mechanisms
         //GameMechs* mainGameMechsRef;
         
-
+        Food* myFood;
         //objPos getPlayerPos() const;
         GameMechs* mainGameMechsRef;
         //objPos getPlayerPos() const;

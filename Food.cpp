@@ -21,7 +21,7 @@ Food::~Food()
 }
 
 
-void Food::generateFood(GameMechs* thisGMRef, objPos blockOff) //objPos blockOff
+void Food::generateFood(GameMechs* thisGMRef, objPos blockOff)
 {
     int i, randomx, randomy;
     int overlap = 1;
@@ -33,15 +33,15 @@ void Food::generateFood(GameMechs* thisGMRef, objPos blockOff) //objPos blockOff
 
     while (overlap == 1)
     {
-        if(myGameRef == nullptr)// || blockOff.pos == nullptr)
+        if(myGameRef == nullptr) //just a safety check to ensure gamRef is not empty
         {
             break;
         }
-        randomx = (rand() % (myGameRef->getBoardSizeX() - 2)) + 1;
-        randomy = (rand() % (myGameRef->getBoardSizeY() - 2)) + 1;
+        randomx = (rand() % (myGameRef->getBoardSizeX() - 2)) + 1; //random x coordinate
+        randomy = (rand() % (myGameRef->getBoardSizeY() - 2)) + 1; //random y coordinate
 
-
-        if(randomx != blockOff.pos->x && randomy != blockOff.pos->y)
+        //ensures food does not generate at same coordinates as the player
+        if(randomx != blockOff.pos->x && randomy != blockOff.pos->y) //objPos blockOff is just player instance
         {
             foodPos.setObjPos(randomx,randomy,'o');  
             overlap = 0;
@@ -54,6 +54,7 @@ void Food::generateFood(GameMechs* thisGMRef, objPos blockOff) //objPos blockOff
 
 objPos Food::GetFoodPos() const
 {
+    //returns food 
     return foodPos;
 }
 
