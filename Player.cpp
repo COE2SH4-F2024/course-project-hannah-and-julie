@@ -79,7 +79,7 @@ void Player::movePlayer() {
         case UP:
             playerPos.pos->y -= 1;
             if (playerPos.pos->y < 1) // Wrap around if moving out of bounds
-                playerPos.pos->y = mainGameMechsRef->getBoardSizeY() - 1;
+                playerPos.pos->y = mainGameMechsRef->getBoardSizeY() - 2;
             break;
         case DOWN:
             playerPos.pos->y += 1;
@@ -89,7 +89,7 @@ void Player::movePlayer() {
         case LEFT:
             playerPos.pos->x -= 1;
             if (playerPos.pos->x < 1) // Wrap around
-                playerPos.pos->x = mainGameMechsRef->getBoardSizeX() - 1;
+                playerPos.pos->x = mainGameMechsRef->getBoardSizeX() - 2;
             break;
         case RIGHT:
             playerPos.pos->x += 1;
