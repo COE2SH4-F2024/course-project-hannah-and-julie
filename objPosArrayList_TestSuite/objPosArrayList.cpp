@@ -43,7 +43,7 @@ void objPosArrayList::insertHead(objPos thisPos)
         
         //if there is enough memory, add one to list size to increase length by 1
         sizeList++;
-        for (int i = sizeList; i > 0; --i) //shifts elements to the right to make space for one at the start
+        for (int i = sizeList -1; i > 0; --i) //shifts elements to the right to make space for one at the start
         {
             aList[i] = aList[i - 1];
         }
@@ -69,7 +69,7 @@ void objPosArrayList::removeHead()
 {
     if(sizeList > 0)
     {
-        for(int i = 0; i < sizeList; i++) //iterates through list and shifts values to the left, removing a value at the head
+        for(int i = 0; i < sizeList -1; i++) //iterates through list and shifts values to the left, removing a value at the head
         {
             aList[i]=aList[i+1];
         }
