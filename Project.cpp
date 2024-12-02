@@ -219,11 +219,16 @@ void DrawScreen(void)
         //Idk when you would do this unless you wanted to leave the game
         MacUILib_printf("GAME EXITED \n");
         MacUILib_printf("Your final score is: %d", myPlayer->getPlayerPosList()->getSize()-1);
+        MacUILib_Delay(1000000);//Delays so player can read score
+        MacUILib_Delay(1000000);
+        MacUILib_Delay(1000000);
+        MacUILib_Delay(1000000);
 
     }
 
     if(myGM->getLoseFlagStatus())
     {
+        
         MacUILib_printf("You Lost !! \n");
         MacUILib_printf("Your final score is: %d \n", myPlayer->getPlayerPosList()->getSize()-1);
         MacUILib_printf("Game will shut down automatically in a few seconds.\n");
@@ -232,7 +237,7 @@ void DrawScreen(void)
         MacUILib_Delay(1000000);
         MacUILib_Delay(1000000);
         //then automatically shuts down
-        myGM->setExitTrue();
+        //myGM->setExitTrue();
         //not sure if losing is suppose to automatically shut down game or if player must shut down automatically
     }
 
