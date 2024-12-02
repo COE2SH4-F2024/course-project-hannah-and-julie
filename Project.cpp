@@ -13,7 +13,7 @@ GameMechs *myGM; //Pointer to Game Mechanics Class
 Player *myPlayer; //Pointer to Player class
 Food *myFood; //pointer to food class
 
-bool ate=false;
+bool ate = false;
 bool collide= false;
 void Initialize(void);
 void GetInput(void);
@@ -216,6 +216,7 @@ void DrawScreen(void)
 
     if(myGM->getExitFlagStatus())
     {
+        //Idk when you would do this unless you wanted to leave the game
         MacUILib_printf("GAME EXITED \n");
         MacUILib_printf("Your final score is: %d", myPlayer->getPlayerPosList()->getSize()-1);
 
