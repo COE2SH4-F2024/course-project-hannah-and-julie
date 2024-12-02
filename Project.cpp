@@ -13,7 +13,8 @@ GameMechs *myGM; //Pointer to Game Mechanics Class
 Player *myPlayer; //Pointer to Player class
 Food *myFood; //pointer to food class
 
-
+bool ate=false;
+bool collide= false;
 void Initialize(void);
 void GetInput(void);
 void RunLogic(void);
@@ -48,10 +49,10 @@ void Initialize(void)
     myGM = new GameMechs(); //Initialized on the heap, must delete/deallocate .
     // makes it a second instance and makes myplayer and mygm talk
     myPlayer= new Player(myGM);
-    //myFood = new Food();
+    myFood = new Food();
+    
 
-
-   //myFood->generateFood(myGM, myPlayer->getPlayerPosList()); //initializes instance of food 
+   myFood->generateFood(myGM, myPlayer->getPlayerPosList()); //initializes instance of food 
 
 }
 
@@ -83,6 +84,23 @@ void RunLogic(void)
 
         // Move the player based on updated direction
     myPlayer->movePlayer();
+    collide=myPlayer->checkSelfCollision();
+
+    if(collide)
+    {
+        myGM->setLoseFlag();
+        //MacUILib_printf("Collision detected! Game over.\n");
+        myGM->setExitTrue(); 
+    }
+    if (myPlayer->checkFoodConsumption(myFood->GetFoodPos()))
+    {
+        ate = true;
+        myPlayer->increasePlayerLength();
+        myFood->generateFood(myGM, myPlayer->getPlayerPosList());
+        ate = false; // Reset after regenerating food
+    }
+    
+    
     if(input != 0)
     {
         
@@ -119,7 +137,7 @@ void RunLogic(void)
         
         
     }
-
+    
     myGM->clearInput();
 
 }
@@ -134,7 +152,7 @@ void DrawScreen(void)
     objPosArrayList* playerPos = myPlayer->getPlayerPosList();
     int playerSize = playerPos->getSize();
 
-    //objPos foodPos = myFood->GetFoodPos();
+    objPos foodPos = myFood->GetFoodPos();
 
     int boardX = myGM->getBoardSizeX();
     int boardY = myGM->getBoardSizeY();
@@ -170,15 +188,7 @@ void DrawScreen(void)
             //at the end of for loop, do something to determine whether to continue with if-else 
 
 
-            //FOOD GENERATION
-            //You can uncomment but it will give errors since the current food generation
-            //relies on the old version of player.cpp that does not generate the snake
-            //Food needs to be updated before printing onto board
-
-            // if(row == foodPos.pos->x && col == foodPos.pos->y) //food doesnt show up when foodPos.pos is not within the range of boardY and boardX
-            // {
-            //     MacUILib_printf("%c",foodPos.symbol);
-            // }
+            
             if(!isSnake)
             {
                 //checks if border
@@ -187,6 +197,15 @@ void DrawScreen(void)
                     MacUILib_printf("#");
                 }
                 //otherwise print blank space
+                //FOOD GENERATION
+            //You can uncomment but it will give errors since the current food generation
+            //relies on the old version of player.cpp that does not generate the snake
+            //Food needs to be updated before printing onto board
+
+                else if(row == foodPos.pos->x && col == foodPos.pos->y) //food doesnt show up when foodPos.pos is not within the range of boardY and boardX
+                {
+                    MacUILib_printf("%c",foodPos.symbol);
+                }
                 else
                 {
                     MacUILib_printf(" ");
@@ -207,12 +226,18 @@ void DrawScreen(void)
     // MacUILib_printf("foodPos y = %d", foodPos.getObjPos().pos->y);
 
 
-
-    //LOST GAME MESSAGE
-    bool loser = myGM->getLoseFlagStatus();
-    if(loser)
+    if(myGM->getExitFlagStatus())
     {
-        MacUILib_printf("You Lost !!");
+        MacUILib_printf("GAME EXITED \n");
+        MacUILib_printf("Your final score is: %d",myPlayer->getPlayerPosList()->getSize());
+
+    }
+    //LOST GAME MESSAGE
+    //bool loser = myGM->getLoseFlagStatus();
+    if(myGM->getLoseFlagStatus())
+    {
+        MacUILib_printf("You Lost !! \n");
+        MacUILib_printf("Your final score is: %d", sizeof(objPosArrayList)-1);
         //myGM->setExitTrue();
         //not sure if losing is suppose to automatically shut down game or if player must shut down automatically
     }

@@ -27,12 +27,15 @@ class Player
         void updatePlayerDir();
         void movePlayer();
         objPos getPlayerPos() const;
-        
+        void increasePlayerLength(); 
+        bool checkFoodConsumption(const objPos& foodPos);
         // More methods to be added here
         objPos playerPos; 
+        objPos foodPos; 
+        bool checkSelfCollision(); 
     private:
         //objPos playerPos; // Upgrade this in iteration 3.  
-
+        
         objPosArrayList* playerPosList;
         
         

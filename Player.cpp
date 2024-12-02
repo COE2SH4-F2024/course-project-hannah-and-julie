@@ -158,3 +158,41 @@ void Player::movePlayer() {
     
 
 }
+// bool Player:: checkFoodConsumption()
+// {
+//     objPos head= playerPosList->getHeadElement();
+//     if (head.pos->x== foodPos.pos->x &&head.pos->y== foodPos.pos->y)
+//     {
+//         return true; 
+//     }
+//     else
+//     {
+//         return false;
+//     }
+
+// }
+bool Player::checkFoodConsumption(const objPos& foodPos)
+{
+    objPos head = playerPosList->getHeadElement();
+    return head.pos->x == foodPos.pos->x && head.pos->y == foodPos.pos->y;
+}
+
+void Player:: increasePlayerLength()
+{
+    playerPosList->insertHead(getPlayerPosList()->getHeadElement());
+}
+bool Player:: checkSelfCollision()
+{
+    for (int i = 1; i < playerPosList->getSize(); i++)
+    {
+        objPos bodyPart = playerPosList->getElement(i);
+        objPos head = playerPosList->getHeadElement();
+        
+        if (head.pos->x == bodyPart.pos->x && head.pos->y == bodyPart.pos->y)
+        {
+            
+
+            return true;
+        }
+    }
+}
