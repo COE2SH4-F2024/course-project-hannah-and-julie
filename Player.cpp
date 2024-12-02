@@ -16,10 +16,10 @@ Player::Player(GameMechs* thisGMRef)
 
     // // //ititializes headPos at middle of board 
     playerPosList->insertHead(objPos(10, 5, '*')); // Starting Position DONT DELETE
-    playerPosList->insertHead(objPos(9, 5, '*')); //Can delete when implementing growing snake feature
-    playerPosList->insertHead(objPos(8, 5, '*')); 
-    playerPosList->insertHead(objPos(7, 5, '*')); //I just have these here to make sure snake can move with 
-    playerPosList->insertHead(objPos(6, 5, '*')); //a body length of more than 1
+    // playerPosList->insertHead(objPos(9, 5, '*')); //Can delete when implementing growing snake feature
+    // playerPosList->insertHead(objPos(8, 5, '*')); 
+    // playerPosList->insertHead(objPos(7, 5, '*')); //I just have these here to make sure snake can move with 
+    // playerPosList->insertHead(objPos(6, 5, '*')); //a body length of more than 1
 
 
 
@@ -190,9 +190,8 @@ bool Player:: checkSelfCollision()
         
         if (head.pos->x == bodyPart.pos->x && head.pos->y == bodyPart.pos->y)
         {
-            
-
-            return true;
+            return true; //collision occured
         }
     }
+    return false; //no collision
 }

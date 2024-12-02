@@ -86,11 +86,11 @@ void RunLogic(void)
     myPlayer->movePlayer();
     collide=myPlayer->checkSelfCollision();
 
-    if(collide)
+    if(collide) //if snake collides with itself
     {
         myGM->setLoseFlag();
         //MacUILib_printf("Collision detected! Game over.\n");
-        myGM->setExitTrue(); 
+        //myGM->setExitTrue(); 
     }
     if (myPlayer->checkFoodConsumption(myFood->GetFoodPos()))
     {
@@ -112,18 +112,10 @@ void RunLogic(void)
                 myGM->setExitTrue();
                 break;
 
-            //also can change the increment score case
-            //INCREMENT SCORE
-            case '+':
-            case '=':
-                myGM->incrementScore();
-                break;
-
             //LOSE GAME
             case 'l':
             case 'L':
                 myGM->setLoseFlag();
-                //myGM->setExitTrue();
                 //not sure if losing is suppose to automatically shut down game or if player must shut down automatically
                 break;
             //if you press f, food is regenerated at a new position
@@ -197,10 +189,6 @@ void DrawScreen(void)
                     MacUILib_printf("#");
                 }
                 //otherwise print blank space
-                //FOOD GENERATION
-            //You can uncomment but it will give errors since the current food generation
-            //relies on the old version of player.cpp that does not generate the snake
-            //Food needs to be updated before printing onto board
 
                 else if(row == foodPos.pos->x && col == foodPos.pos->y) //food doesnt show up when foodPos.pos is not within the range of boardY and boardX
                 {
@@ -229,16 +217,21 @@ void DrawScreen(void)
     if(myGM->getExitFlagStatus())
     {
         MacUILib_printf("GAME EXITED \n");
-        MacUILib_printf("Your final score is: %d",myPlayer->getPlayerPosList()->getSize());
+        MacUILib_printf("Your final score is: %d", myPlayer->getPlayerPosList()->getSize()-1);
 
     }
-    //LOST GAME MESSAGE
-    //bool loser = myGM->getLoseFlagStatus();
+
     if(myGM->getLoseFlagStatus())
     {
         MacUILib_printf("You Lost !! \n");
-        MacUILib_printf("Your final score is: %d", sizeof(objPosArrayList)-1);
-        //myGM->setExitTrue();
+        MacUILib_printf("Your final score is: %d \n", myPlayer->getPlayerPosList()->getSize()-1);
+        MacUILib_printf("Game will shut down automatically in a few seconds.\n");
+        MacUILib_Delay(1000000);//Delays so player can read score
+        MacUILib_Delay(1000000);
+        MacUILib_Delay(1000000);
+        MacUILib_Delay(1000000);
+        //then automatically shuts down
+        myGM->setExitTrue();
         //not sure if losing is suppose to automatically shut down game or if player must shut down automatically
     }
 
@@ -259,5 +252,5 @@ void CleanUp(void)
     //DEALLOCATIONS
     delete(myGM);
     delete(myPlayer);
-    //delete(myFood);
+    delete(myFood);
 }
