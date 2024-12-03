@@ -84,6 +84,7 @@ void RunLogic(void)
 
         // Move the player based on updated direction
     myPlayer->movePlayer();
+    
     collide=myPlayer->checkSelfCollision();
 
     if(collide) //if snake collides with itself

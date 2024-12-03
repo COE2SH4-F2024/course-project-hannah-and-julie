@@ -39,7 +39,8 @@ objPos::objPos(const objPos &obj)
 objPos::~objPos()
 {
     //frees memory that was dynamically allocated previously
-    delete(pos);
+    delete pos;
+
 }
 
 
@@ -50,6 +51,8 @@ objPos& objPos::operator=(const objPos &obj)
     if(this != &obj)
     {
         //allocates new memory for pos 
+        delete pos;
+        
         pos = new Pos;
 
         //creates deep copy of x and y member of struct from source obj

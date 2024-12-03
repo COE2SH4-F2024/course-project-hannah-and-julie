@@ -74,6 +74,7 @@ Food::Food()
 // Destructor
 Food::~Food()
 {
+
     // Nothing to free
 }
 

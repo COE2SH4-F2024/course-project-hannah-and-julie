@@ -36,11 +36,11 @@ objPos::objPos(const objPos &obj)
 }
 
 //ADDED IN destructor
-// objPos::~objPos()
-// {
-//     //frees memory that was dynamically allocated previously
-//     delete(pos);
-// }
+objPos::~objPos()
+{
+    //frees memory that was dynamically allocated previously
+    delete(pos);
+}
 
 
 //ADDED IN implement copy assignment constructor
